@@ -1,3 +1,6 @@
+	* Implement restarting of shell only if only one terminal is left.
+	* Remove border of notebook.
+
 version 0.9.6 (2008-4-28):
 	* Move bugtracker to http://bugs.launchpad.net/tilda
 	* Fix metacity-2.20 focus problems
