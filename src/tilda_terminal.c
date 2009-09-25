@@ -451,7 +451,7 @@ static void child_exited_cb (GtkWidget *widget, gpointer data)
 
     /* These can stay here. They don't need to go into a header because
      * they are only used at this point in the code. */
-    enum command_exit { HOLD_TERMINAL_OPEN, RESTART_COMMAND, EXIT_TERMINAL };
+    enum command_exit { HOLD_TERMINAL_OPEN, RESTART_COMMAND, EXIT_TERMINAL, ONLY_RESTART_IN_LAST_TERMINAL };
 
     /* Check the user's preference for what to do when the child terminal
      * is closed. Take the appropriate action */
@@ -465,6 +465,15 @@ static void child_exited_cb (GtkWidget *widget, gpointer data)
             start_shell (tt);
             break;
         case HOLD_TERMINAL_OPEN:
+            break;
+        case ONLY_RESTART_IN_LAST_TERMINAL:
+            if (gtk_notebook_get_n_pages (GTK_NOTEBOOK (tt->tw->notebook)) == 1) {
+                vte_terminal_feed (VTE_TERMINAL(tt->vte_term), "\r\n\r\n", 4);
+                start_shell (tt);
+            }
+            else {
+                tilda_window_close_tab (tt->tw, index);
+            }
             break;
         default:
             break;

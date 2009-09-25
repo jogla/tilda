@@ -646,7 +646,8 @@ Replace initial title</property>
                                 <property name="visible">True</property>
                                 <property name="items" translatable="yes">Hold the terminal open
 Restart the command
-Exit the terminal</property>
+Exit the terminal
+Restart the command only in last open terminal</property>
                               </widget>
                               <packing>
                                 <property name="left_attach">1</property>
