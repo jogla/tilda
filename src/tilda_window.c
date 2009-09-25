@@ -551,10 +551,21 @@ gint tilda_window_add_tab (tilda_window *tw)
 
     /* Create page and append to notebook */
     label = gtk_label_new ("Tilda");
+
+    GtkRcStyle* style = gtk_widget_get_modifier_style (GTK_WIDGET(tw->notebook));
+        
+    style->ythickness = 0;
+    style->xthickness = 0;
+    
+    gtk_widget_modify_style(GTK_WIDGET(tw->notebook), style);
+
     /* Strangely enough, prepend puts pages on the end */
     index = gtk_notebook_prepend_page (GTK_NOTEBOOK(tw->notebook), tt->hbox, label);
     gtk_notebook_set_tab_label_packing (GTK_NOTEBOOK(tw->notebook), tt->hbox, TRUE, TRUE, GTK_PACK_END);
     gtk_notebook_set_current_page (GTK_NOTEBOOK(tw->notebook), index);
+
+    /* after ythickness and xthickness what set to 0, the border is now to small, so we increase it. */
+    gtk_notebook_set_tab_border (GTK_NOTEBOOK(tw->notebook), 5);
 
     /* We should show the tabs if there are more than one tab in the notebook */
     if (gtk_notebook_get_n_pages (GTK_NOTEBOOK (tw->notebook)) > 1)
